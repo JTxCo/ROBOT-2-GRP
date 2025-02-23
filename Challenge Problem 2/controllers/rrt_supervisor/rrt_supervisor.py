@@ -1,18 +1,59 @@
+'''
+    Joel Carlson and Saravana Prakash
+
+
+'''
+
+
 # You may need to import some classes of the controller module. Ex:
-#  from controller import Robot, Motor, DistanceSensor
+from controller import Robot, Motor, DistanceSensor, Emitter, Receiverr, Supervisor
 
 #Create a class to represent a Node, which consists of position, parent Node and action(velocity of the motors)
+class Node:
+    def __init__(self, position, parent, action):
+        self.position = position
+        self.parent = parent
+        self.action = action #Velocity of the motors
+
+
+
 
 def randomly_sample_state():
     #Using 50% goal biasing, sample a state within the arena and return the state
 
 
+
+
+
+
+
 def main():
     # Initialize the Webots Supervisor
-    #Initialize the supervisor node, the graph and create a node class object to represent the initial state of the robot, which is also the only node in the tree
-    #Create variables for the e-puck robot, the emmiter and the receiver
-    #Set channels for the emitter reciever pair
+    supervisor = Supervisor()
     
+    #Initialize the supervisor node, the graph and create a node class object to represent the initial state of the robot, which is also the only node in the tree
+    
+    
+    #Create variables for the e-puck robot, the emmiter and the receiver
+    robot = supervisor.getFromDef("EPUCK")
+    emitter = robot.getDevice("emitter")
+    receiver = robot.getDevice("receiver")
+    
+    
+    #Set channels for the emitter reciever pair
+    emitter.setChannel(1)
+    receiver.setChannel(2)
+    # Time stop at intervals to check for new messages could be set here TBD
+    # receiver.enable(TIME_STEP)
+    
+    #Set the robot's motors to velocity control mode
+    left_motor = robot.getDevice("left wheel motor")
+    right_motor = robot.getDevice("right wheel motor")
+    left_motor.setPosition(float('inf'))
+    right_motor.setPosition(float('inf'))
+     
+    
+     
     # Run the simulation step by step in a while loop:
     	#Randomly sample a state
     	#Find the nearest node in the tree to the randomly sampled state
